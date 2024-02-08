@@ -2,8 +2,9 @@
 {
     internal class Program
     {
-        static dou
+        static double probabilitaGoal;
         static int minutiAttuali;
+
         static void Main(string[] args)
         {
             Squadra cerignola = new Squadra("Audace Cerignola");
@@ -17,31 +18,45 @@
             return nRandom;
         }
 
-        static void scorriTempo()
+        static void faiGoalCasuale(Squadra squadra1, Squadra squadra2)
+        {
+            if(numeroRandom(1,2) == 1)
+            {
+                squadra1.goalFatto();
+                squadra2.goalSubito();
+            }
+            else
+            {
+                squadra2.goalFatto();
+                squadra1.goalSubito();
+            }
+
+        }   
+
+        static void iniziaPartita(Squadra squadra1, Squadra squadra2)
         {
 
+            Console.WriteLine("Partita Iniziata");
+            minutiAttuali = 0;
+            const double k = 1.4;
+            double probabilita = 1;
 
             for (int i = 0; i < 90; i++)
             {
+                minutiAttuali++;
+                probabilita *= k;
 
+                if ((numeroRandom((int)probabilita, 100)) == 100)
+                {
+                    faiGoalCasuale(squadra1, squadra2);
+                    probabilita = minutiAttuali / 2*k;
+                    Console.WriteLine($"Goal Fatto ai minuti {minutiAttuali}");
+                }
+
+                
             }
-        }
 
 
-        
-
-        static void assegnaGoalSquadraRandom()
-        {
-            
-        }
-        static void iniziaPartita(Squadra squadra1, Squadra squadra2)
-        {
-            minutiAttuali = 0;
-            assegnaGoalSquadraRandom(squadra1, squadra2);
-
-            if(numeroRandom(0, 1) == 0) {
-                squadra1.goalFatto();
-            }
         }
     }
 }
